@@ -1,6 +1,8 @@
 import yfinance as yf 
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
+
 #We first import yfinance to get the data \n#! we will also now import matplotlib (this was added after doing data analisis)
 
 #Here, we look for Tesla information and later get a history of the stock, we set the period to be 6mo
@@ -97,3 +99,15 @@ def overlaying_SMA(Ticker):
         raise ValueError("Not Enough Data for Overlaying_SMA")
 
 #!!! overlaying_SMA(tsla_history_1y) #4 Done already! no need to repeat at runtime
+
+def pct_change(Ticker):
+    Ticker.Daily_Return= Ticker.Close.pct_change()
+    plt.figure(figsize=(10, 6))
+    sns.histplot(Ticker.Daily_Return.dropna(), bins=50, kde=True)
+    plt.title('Daily Returns Distribution')
+    plt.xlabel('Daily Returns')
+    plt.ylabel('Frequency')
+    plt.savefig('tesla_stock_Overlaying_SMA_plot.png')  
+    plt.close()
+
+pct_change(tsla_history_1y)
