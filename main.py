@@ -128,4 +128,22 @@ def compute_correl_two_Tickers_Daily_Return(Ticker1, Ticker2):
 aapl= yf.Ticker("AAPL")
 aapl_history= aapl.history(period="1y")
 correl=compute_correl_two_Tickers_Daily_Return(tsla_history_1y,aapl_history)
-print(correl)
+
+
+#calculalate correl for n number of tickers and make a heatmap of them
+
+def correl_heatmap(*tickers):
+    stock_data= {}
+    for Ticker in tickers:
+        stock= yf.Ticker(Ticker)
+        stock_history= stock.history(period="1y")
+        stock_history.Daily_Return= stock_history.Close.pct_change()
+        stock_data[Ticker] = stock_history.Daily_Return
+    final_df= pd.DataFrame(stock_data)
+    correl_matrix= final_df.corr()
+    plt.figure(figsize=(10, 6))
+    sns.heatmap(correl_matrix, annot=True, cmap="coolwarm", linewidths=0.5)
+    plt.title("Stock Correlation Heatmap")
+    plt.savefig("correlation_heatmap.png")
+
+#!!!correl_heatmap("TSLA", "AAPL", "MSFT", "NVDA") #7 Already Saved
