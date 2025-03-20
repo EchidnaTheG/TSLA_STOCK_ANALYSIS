@@ -99,7 +99,7 @@ def overlaying_SMA(Ticker):
         raise ValueError("Not Enough Data for Overlaying_SMA")
 
 #!!!overlaying_SMA(tsla_history_1y) #4 Done already! no need to repeat at runtime
-
+#this calculates the average change everyday
 def pct_change(Ticker):
     Ticker.Daily_Return= Ticker.Close.pct_change()
     plt.figure(figsize=(10, 6))
@@ -111,10 +111,21 @@ def pct_change(Ticker):
     plt.close()
 
 #!!!pct_change(tsla_history_1y) #5 Done Already! No need to repeat at runtime
-
+#This computes how volatile a stock is, the higher, the riskier but higher rewards and viceversa
 def compute_volability(Ticker):
     Ticker.Daily_Return= Ticker.Close.pct_change()
     volatility = Ticker.Daily_Return.std()
     return volatility
 
-print(f"TSLA Volatily {compute_volability(tsla_history_1y)}")
+#!!!print(f"TSLA Volatily {compute_volability(tsla_history_1y)}") #6 Done!
+#this gives corrrel between two tickers
+def compute_correl_two_Tickers_Daily_Return(Ticker1, Ticker2):
+    Ticker1.Daily_Return= Ticker1.Close.pct_change()
+    Ticker2.Daily_Return= Ticker2.Close.pct_change()
+    correl_coefficient= Ticker1.Daily_Return.corr(Ticker2.Daily_Return)
+    return correl_coefficient
+
+aapl= yf.Ticker("AAPL")
+aapl_history= aapl.history(period="1y")
+correl=compute_correl_two_Tickers_Daily_Return(tsla_history_1y,aapl_history)
+print(correl)
