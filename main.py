@@ -98,7 +98,7 @@ def overlaying_SMA(Ticker):
     else:
         raise ValueError("Not Enough Data for Overlaying_SMA")
 
-#!!! overlaying_SMA(tsla_history_1y) #4 Done already! no need to repeat at runtime
+#!!!overlaying_SMA(tsla_history_1y) #4 Done already! no need to repeat at runtime
 
 def pct_change(Ticker):
     Ticker.Daily_Return= Ticker.Close.pct_change()
@@ -107,7 +107,14 @@ def pct_change(Ticker):
     plt.title('Daily Returns Distribution')
     plt.xlabel('Daily Returns')
     plt.ylabel('Frequency')
-    plt.savefig('tesla_stock_Overlaying_SMA_plot.png')  
+    plt.savefig('tesla_stock_PCT_CHANGE_plot.png')  
     plt.close()
 
-pct_change(tsla_history_1y)
+#!!!pct_change(tsla_history_1y) #5 Done Already! No need to repeat at runtime
+
+def compute_volability(Ticker):
+    Ticker.Daily_Return= Ticker.Close.pct_change()
+    volatility = Ticker.Daily_Return.std()
+    return volatility
+
+print(f"TSLA Volatily {compute_volability(tsla_history_1y)}")
