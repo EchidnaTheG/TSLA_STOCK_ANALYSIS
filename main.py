@@ -147,3 +147,8 @@ def correl_heatmap(*tickers):
     plt.savefig("correlation_heatmap.png")
 
 #!!!correl_heatmap("TSLA", "AAPL", "MSFT", "NVDA") #7 Already Saved
+#this computes the sharp ration against no risk and a comparison ticker's risk
+
+def compute_sharp_ratio(ticker, comparison_ticker):
+    risk_free_sharp= (ticker.Daily_Return.mean()) / (compute_volability(ticker))
+    with_risk_sharp= (ticker.Daily_Return.mean()-) / (compute_volability(ticker))
