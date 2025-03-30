@@ -159,6 +159,18 @@ def compute_sharp_ratio(*tickers):
         risk_free_sharp= (stock_history.Daily_Return.mean()-(0.03/252)) / (compute_volability(stock_history))
         stock_data[ticker]= risk_free_sharp
     return stock_data
-print(compute_sharp_ratio("TSLA", "AAPL", "MSFT", "NVDA"))
 
 
+def compute_rsi(ticker_hist):
+    delta= ticker_hist.Close.diff()
+    gain= delta.where(delta>0, 0)
+    loss = -delta.where(delta<0,0)
+    avg_gain = gain.rolling(window = 14, min_periods=1).mean()
+    avg_loss = loss.rolling(window = 14, min_periods=1).mean()
+    RS= avg_gain/avg_loss
+    RSI= 100-(100/(1+RS))
+    ticker_hist["RSI"] =RSI
+    return ticker_hist["RSI"]
+
+
+ 
